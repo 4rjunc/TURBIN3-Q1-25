@@ -1,1 +1,1 @@
-# turbin3-task
+# Turbin3 Qualification Assignment
