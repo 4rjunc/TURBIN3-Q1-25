@@ -12,17 +12,17 @@ const connection = new Connection("https://api.devnet.solana.com", commitment);
 const token_decimals = 1_000_000n;
 
 // Mint address
-const mint = new PublicKey("5cRTjEdbBfzSXw94SGWpxxsbUMy5HYeV2r11XK6Y5HiR");
+const mint = new PublicKey("HH86Vod2827iQS9rPc3uuw3GukLtnoishvY7UvvgXmQr");
 
 (async () => {
     try {
         // Create an ATA
         const ata = await getOrCreateAssociatedTokenAccount(connection, keypair, mint, keypair.publicKey)
-        console.log(`Your ata is: ${ata.address.toBase58()}`); // 4RrA4nQjnzV32VrSmSZQ33FWJMMsAemLYuU6wEq7fxDh
+        console.log(`Your ata is: ${ata.address.toBase58()}`); // 9abrG3k9NPvyQupVJCgz4EqNWaTbd7vyzQS8djMfPdWb
 
         // Mint to ATA
         const mintTx = await mintTo(connection, keypair, mint, ata.address, keypair.publicKey, 100000000000)
-        // txid 44LFE6C96wY1LQukdkBtJoinMibcQFVq14iWBX97yi5cr9u52FtnnEsQwRdBuRFbqgror6fEQLGqWgN7r4x9j3mV
+        // txid N1Mw4tPLybUkgs8mTCNwosMzgpHEYa8Wcf2rD5CRDzNWf5fT8tqnBbY71VhSXLVgrTxUNpyGjg9XudF5SoDgTsy
         console.log(`Your mint txid: ${mintTx}`);
     } catch(error) {
         console.log(`Oops, something went wrong: ${error}`)
