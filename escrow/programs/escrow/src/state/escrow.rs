@@ -7,6 +7,6 @@ pub struct EscrowState {
     pub maker: Pubkey,
     pub mint_a: Pubkey,
     pub mint_b: Pubkey,
-    pub receive_amount: u8,
+    pub receive_amount: u64,
     pub bump: u8,
 }

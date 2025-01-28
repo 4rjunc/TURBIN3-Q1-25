@@ -1,31 +1,29 @@
 use anchor_lang::prelude::*;
 use anchor_spl::associated_token::AssociatedToken;
-use anchor_spl::token_interface::{
-    transfer_checked, Mint, TokenAccount, TokenInterface, TransferChecked,
-};
+use anchor_spl::token_interface::{ Mint, TokenAccount, TokenInterface, TransferChecked, transfer_checked};
 
 use crate::state::EscrowState;
 
+
 #[derive(Accounts)]
-#[instruction(seeds: u8)]
+#[instruction(seeds: u8)] 
 pub struct Make<'info> {
     #[account(mut)]
     pub maker: Signer<'info>,
-    pub mint_a: Account<'info, Mint>,
-    pub mint_b: Account<'info, Mint>,
+    pub mint_a: InterfaceAccount<'info, Mint>,
+    pub mint_b: InterfaceAccount<'info, Mint>,
     #[account(
         mut,
-        associated_token::mint = mint_a,
+        associated_token::mint = mint_a, 
         associated_token::authority = maker,
     )]
-    pub maker_ata_a: InterfaceAccount<'info, TokenAccount>,
-
+    pub maker_ata_a: InterfaceAccount<'info, TokenAccount>,  
     #[account(
-        init,
+        init, 
         payer = maker,
         space = 8 + EscrowState::INIT_SPACE,
-        seeds = [b"escrow", maker.key.as_ref(), seeds.to_le_bytes().as_ref()],
-        bump
+        seeds = [b"escrow", maker.key.as_ref(), seeds.to_le_bytes().as_ref() ],
+        bump,
     )]
     pub escrow: Account<'info, EscrowState>,
     #[account(
@@ -41,21 +39,21 @@ pub struct Make<'info> {
 }
 
 impl<'info> Make<'info> {
-    pub fn make(&mut self, seeds: u64, receive_amount: u64, bump: &MakeBump) -> Result<()> {
+    pub fn make(&mut self, seed: u64, receive_amount: u64, bumps: &MakeBumps) -> Result<()> {
         self.escrow.set_inner(EscrowState {
-            seeds,
+            seed,
             maker: self.maker.key(),
             mint_a: self.mint_a.key(),
             mint_b: self.mint_b.key(),
             receive_amount,
-            bump: bump.escrow,
+            bump: bumps.escrow,
         });
         Ok(())
     }
 
     pub fn deposit(&mut self, amount: u64) -> Result<()> {
         let cpi_program = self.token_program.to_account_info();
-
+        
         let cpi_accounts = TransferChecked {
             from: self.maker_ata_a.to_account_info(),
             mint: self.mint_a.to_account_info(),
