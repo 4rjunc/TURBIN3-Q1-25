@@ -15,4 +15,9 @@ pub struct Initialize<'info> {
         space = Marketplace::INIT_SPACE
     )]
     pub marketplace: Account<'info, Marketplace>,
+    #[account(
+        seeds = [b"treasury", marketplace.key().as_ref()]
+        bump,
+    )]
+    pub treasury: SystemAccount<'info>,
 }
