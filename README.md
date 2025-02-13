@@ -25,6 +25,11 @@ A collection of Solana Anchor programs developed during the Turbin Builders Coho
 [➡️ View Implementation](https://github.com/solana-turbin3/Q1_25_Builder_4rjunc/tree/main/amm)
 - Automated Market Maker implementation
 
+### 5. Staking Program 
+[  View Implementation](https://github.com/solana-turbin3/Q1_25_Builder_4rjunc/tree/main/staking)
+- Stake assets and get reward
+
+
 ## 🛠 Tech Stack
 - Solana Blockchain
 - Anchor Framework
